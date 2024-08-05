@@ -1,39 +1,11 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      nodejs: 20.x
-    commands:
-      - echo Installing dependencies...
-      - yarn install
-      - ls -la
-
   build:
     commands:
-      - echo Building the application...
-      - yarn build
-      - ls -la
+       - npm ci && npm run build # clean install (npm ci) and build (npm run build)
 
-  post_build:
-    commands:
-      - echo Packaging the application...
-      - mkdir -p deploy
-      - cp -R .next deploy/
-      - cp package.json deploy/
-      - cp -R public deploy/
-      - cp Procfile deploy/
-      - cd deploy
-      - zip -r ../build.zip *
-      - cd ..
-      - echo Build complete
-      - ls -la
 
 artifacts:
   files:
     - '**/*'
-  base-directory: build
-
-cache:
-  paths:
-    - 'node_modules/**/*'
