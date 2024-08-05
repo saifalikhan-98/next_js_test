@@ -3,13 +3,13 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20.12.1
+      nodejs: 20.x
     commands:
       - echo Installing dependencies...
       - yarn install
       - ls -la
 
-    build:
+  build:
     commands:
       - echo Building the application...
       - yarn build
@@ -18,15 +18,21 @@ phases:
   post_build:
     commands:
       - echo Packaging the application...
-      - zip -r build.zip * -x node_modules/\* .git/\* .next/cache/\*
-      - ls -la
+      - mkdir -p deploy
+      - cp -R .next deploy/
+      - cp package.json deploy/
+      - cp -R public deploy/
+      - cp Procfile deploy/
+      - cd deploy
+      - zip -r ../build.zip *
+      - cd ..
       - echo Build complete
+      - ls -la
 
 artifacts:
   files:
     - build.zip
   discard-paths: yes
-  base-directory: .  # Ensure the base directory is correct for your project
 
 cache:
   paths:
