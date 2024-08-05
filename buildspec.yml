@@ -7,16 +7,19 @@ phases:
     commands:
       - echo Installing dependencies...
       - yarn install
+      - ls -la
 
-  build:
+    build:
     commands:
       - echo Building the application...
       - yarn build
+      - ls -la
 
   post_build:
     commands:
       - echo Packaging the application...
-      - zip -r build.zip *
+      - zip -r build.zip * -x node_modules/\* .git/\* .next/cache/\*
+      - ls -la
       - echo Build complete
 
 artifacts:
