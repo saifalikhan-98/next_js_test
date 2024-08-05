@@ -31,8 +31,8 @@ phases:
 
 artifacts:
   files:
-    - build.zip
-  discard-paths: yes
+    - '**/*'
+  base-directory: build
 
 cache:
   paths:
